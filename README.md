@@ -1,2 +1,2 @@
 # Simplex-JS
- simplex implmentado em JS
+ simplex implementado em JS
