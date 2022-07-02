@@ -17,10 +17,10 @@ if(qtdRest==3){
 //var r3 ="0.3x1+0.4x2+0.3x3+0.2x4<=60"; 
 
 //prob2
-var qtdRest =2;
-var funcObjetiva = "1x1+2x2+3x3+4x4";
-var r1= "0x1+2x2+3x3+0x4<=10";
-var r2 ="1x1+0x2+0x3+4x4<=20.4";
+//var qtdRest =2;
+//var funcObjetiva = "1x1+2x2+3x3+4x4";
+//var r1= "0x1+2x2+3x3+0x4<=10";
+//var r2 ="1x1+0x2+0x3+4x4<=20.4";
 
 //prob3
 //var qtdRest =3;
@@ -28,6 +28,13 @@ var r2 ="1x1+0x2+0x3+4x4<=20.4";
 //var r1="4x1+1x2+0.8x3<=10";
 //var r2="0.9x1+1x2+5x3<=9.5";
 //var r3="1.2x1+3x2+1.5x3<=11";
+
+//prob4
+var qtdRest = 3;
+var funcObjetiva ="1x1+1x2";
+var r1="5x1+2x2<=20";
+var r2="2x1-1x2>=2";
+var r3="1x1+5x2>=15";
 
 var qtdVar;
 var z=[];
@@ -141,35 +148,47 @@ for(i=0; i<=r3.length; i++){
 }
 console.log(restr3);
 }
-//cria variaveis de folga z
-for(i=1;i<=qtdVar;i++){
-  z.splice(qtdVar+i,0,0);
+
+//cria variaveis de folga para cada restricao
+var tamanho = z.length;
+//console.log(tamanho)
+for(i=1;i<=qtdRest;i++){ 
+    z.splice(tamanho+i,0,0);
+  
 }
 
+//cria variaveis de folga z
+//for(i=1;i<=qtdVar;i++){
+  //z.splice(qtdVar+i,0,0);
+//}
+
 //cria variavel de folga R1
-for(i=1;i<=qtdVar;i++){
-  if(i==1){
-    restr1.splice(qtdVar+i,0,1);
+var tamanho2 = restr1.length;
+for(i=0;i<qtdRest;i++){
+  if(i==0){
+    restr1.splice(tamanho2-1,0,1);
   }else{
-    restr1.splice(qtdVar+i,0,0);
-  }
+    restr1.splice(tamanho2+i-1,0,0);
+ }
 }
 //cria variavel de folga R2
-for(i=1;i<=qtdVar;i++){
-  if(i==2){
-    restr2.splice(qtdVar+i,0,1);
-  }else{
-    restr2.splice(qtdVar+i,0,0);
+for(i=0;i<qtdRest;i++){
+  if(i!=1){
+    restr2.splice(tamanho2+i-1,0,0);
+  }
+  if(i==1){
+    restr2.splice(tamanho2,0,1);
   }
 }
 
 //cria variavel de folga R3
 if(qtdRest==3){
-for(i=1;i<=qtdVar;i++){
-  if(i==3){
-    restr3.splice(qtdVar+i,0,1);
-  }else{
-    restr3.splice(qtdVar+i,0,0);
+for(i=0;i<qtdRest;i++){
+  if(i!=2){
+    restr3.splice(tamanho2+i-1,0,0);
+  }
+  if(i==2){
+    restr3.splice(tamanho2+1,0,1);
   }
 }
 }
@@ -217,6 +236,7 @@ for(i=0;i<z.length;i++){
    
     var max = Math.max(...maiorValor);
     var pivo = max;
+    console.log("Pivo: "+pivo);
     var pivol1 = z[i]*obtemInversa;
     var pivol2 = restr1[i]*obtemInversa;
     var pivol3 = restr2[i]*obtemInversa;
@@ -227,7 +247,7 @@ for(i=0;i<z.length;i++){
 
   }
   if(restr1[i]==pivo){
-      console.log("Rest1 Linha que sai: "+(i));
+      console.log("Rest1 Linha que sai: ");
      //cria nova linha Pivo caso seja 1°restrição 
       restr1 = restr1.map(item=>item/pivo); 
 
@@ -251,7 +271,7 @@ for(i=0;i<z.length;i++){
 
 
       if(restr2[i]==pivo){
-        console.log("Rst2 linha que sai: "+(i));
+        console.log("Rst2 linha que sai: ");
        //cria nova linha PIVO Pivo caso seja 2°restrição
         restr2 = restr2.map(item=>item/pivo);
 
@@ -275,7 +295,7 @@ for(i=0;i<z.length;i++){
 
     if(qtdRest==3){
     if(restr3[i]==pivo){
-      console.log("rst3 linha que sai: "+(i));
+      console.log("rst3 linha que sai: ");
       //cria nova linha Pivo Pivo caso seja 3°restrição
       restr3 = restr3.map(item=>item/pivo);
 
