@@ -4,17 +4,16 @@ console.log("Digite tudo sem espaços")
 //var qtdRest = prompt("Digite a quantidade de restrições: ");
 //var r1= prompt("Digite a Restrição-1: ");
 //var r2= prompt("Digite a Restrição-2: ");
-
-
 if(qtdRest==3){
   //var r3= prompt("Digite a Restrição-3: ");
 }
+
 //prob1
-//var qtdRest =3;
-//var funcObjetiva = "2x1+4x2+5x3+3x4";
-//var r1= "0.3x1+0.3x2+0.5x3+0.4x4<=40";
-//var r2 ="0.4x1+0.3x2+0.2x3+0.4x4<=40";
-//var r3 ="0.3x1+0.4x2+0.3x3+0.2x4<=60"; 
+var qtdRest =3;
+var funcObjetiva = "2x1+4x2+5x3+3x4";
+var r1= "0.3x1+0.3x2+0.5x3+0.4x4<=40";
+var r2 ="0.4x1+0.3x2+0.2x3+0.4x4<=40";
+var r3 ="0.3x1+0.4x2+0.3x3+0.2x4<=60"; 
 
 //prob2
 //var qtdRest =2;
@@ -30,13 +29,13 @@ if(qtdRest==3){
 //var r3="1.2x1+3x2+1.5x3<=11";
 
 //prob4
-var qtdRest = 3;
-var funcObjetiva ="1x1+1x2";
-var r1="5x1+2x2<=20";
-var r2="2x1-1x2>=2";
-var r3="1x1+5x2>=15";
+//var qtdRest = 3;
+//var funcObjetiva ="1x1+1x2";
+//var r1="5x1+2x2<=20";
+//var r2="2x1-1x2>=2";
+//var r3="3x1+5x2>=15";
 
-var qtdVar;
+var qtdVar=0;
 var z=[];
 var restr1=[];
 var restr2=[];
@@ -57,6 +56,7 @@ for(i=0; i<=funcObjetiva.length; i++){
   
   if(funcObjetiva.slice(i,i+1)=="x"){
       qtdVar ++;
+      //console.log("Nvar:"+qtdVar)
   }
   
  //console.log(funcObjetiva.slice(i,i+1))
@@ -104,6 +104,7 @@ console.log(restr1);
 //cria rest2 com valores tratados
 aux =0;
 nVar =0;
+var criar=0;
 for(i=0; i<=r2.length; i++){
 
   if((r2.slice(i,i+1)=="+")||(r2.slice(i,i+1)=="-")||(r2.slice(i,i+1)=="<")){  
@@ -114,17 +115,24 @@ for(i=0; i<=r2.length; i++){
     aux++;
     nVar++;
   }
+  if((r2.slice(i,i+1)==">")){
+    restr2[nVar] = parseFloat(r2.slice(aux-1,i-2));
+    aux++;
+    nVar++;
+    criar=1;
+  }
   if((r2.slice(i,i+1)=="=")){
-    aux1 = i;
+    aux = i;
   }
   if(i==r2.length){
     //console.log(r2.slice(aux-4,i));
-    restr2[nVar] = parseFloat(r2.slice(aux1+1,i));
+    restr2[nVar] = parseFloat(r2.slice(aux+1,i));
   }
 }
 console.log(restr2);
 if(qtdRest==3){
 //cria restr3 com valores tratados
+var criar2=0;
 aux =0;
 nVar =0;
 for(i=0; i<=r3.length; i++){
@@ -137,14 +145,21 @@ for(i=0; i<=r3.length; i++){
     aux++;
     nVar++;
   }
+  if((r3.slice(i,i+1)==">")){
+    restr3[nVar] = parseFloat(r3.slice(aux,i-2));
+    aux++;
+    nVar++;
+    criar2=1;
+  }
   if((r3.slice(i,i+1)=="=")){
-    aux1 = i;
+    aux = i;
   }
   if(i==r3.length){
     
   // console.log(r1.slice(aux,i-2))
     restr3[nVar] = parseFloat(r3.slice(aux+1,i));
   }
+
 }
 console.log(restr3);
 }
@@ -152,45 +167,90 @@ console.log(restr3);
 //cria variaveis de folga para cada restricao
 var tamanho = z.length;
 //console.log(tamanho)
-for(i=1;i<=qtdRest;i++){ 
-    z.splice(tamanho+i,0,0);
-  
-}
-
 //cria variaveis de folga z
-//for(i=1;i<=qtdVar;i++){
-  //z.splice(qtdVar+i,0,0);
-//}
+if(criar==1){
+  for(i=1;i<=qtdRest+2;i++){ 
+    z.splice(tamanho+i,0,0);
+}
+}else{
+  for(i=1;i<=qtdRest;i++){ 
+    z.splice(tamanho+i,0,0);
+  }
+}
 
 //cria variavel de folga R1
 var tamanho2 = restr1.length;
-for(i=0;i<qtdRest;i++){
-  if(i==0){
-    restr1.splice(tamanho2-1,0,1);
+if(criar==1){
+    for(i=0;i<qtdRest+2;i++){
+      if(i==0){
+        restr1.splice(tamanho2-1,0,1);
+      }
+      if(i!=0){
+        restr1.splice(tamanho2-1+i,0,0);
+      }
+
+    }
   }else{
-    restr1.splice(tamanho2+i-1,0,0);
- }
+    for(i=0;i<qtdRest;i++){
+      if(i==0){
+        restr1.splice(tamanho2-1,0,1);
+      }else{
+        restr1.splice(tamanho2+i-1,0,0);
+     }
+    }
 }
+
 //cria variavel de folga R2
-for(i=0;i<qtdRest;i++){
-  if(i!=1){
-    restr2.splice(tamanho2+i-1,0,0);
+if(criar==1){
+    for(i=0;i<qtdRest+2;i++){
+     if(i==1){
+      restr2.splice(tamanho2-1+i,0,-1);
+     }  
+     if(i==2)
+    {
+      restr2.splice(tamanho2-1+i,0,1);
+    }
+     if(i!=1&&i!=2){
+      restr2.splice(tamanho2-1+i,0,0);
+   }
   }
-  if(i==1){
-    restr2.splice(tamanho2,0,1);
+}else{
+    for(i=0;i<qtdRest;i++){
+     if(i!=1){
+        restr2.splice(tamanho2+i-1,0,0);
+    }  
+     if(i==1){
+      restr2.splice(tamanho2,0,1);
+   }
   }
 }
 
+
 //cria variavel de folga R3
 if(qtdRest==3){
-for(i=0;i<qtdRest;i++){
-  if(i!=2){
-    restr3.splice(tamanho2+i-1,0,0);
+  if(criar2==1){
+    for(i=0;i<qtdRest+2;i++){
+     if(i==3){
+      restr3.splice(tamanho2-1+i,0,-1);
+     }  
+     if(i==4)
+    {
+      restr3.splice(tamanho2-1+i,0,1);
+    }
+     if(i!=4&&i!=3){
+      restr3.splice(tamanho2-1+i,0,0);
+   }
   }
-  if(i==2){
-    restr3.splice(tamanho2+1,0,1);
+  }else{
+    for(i=0;i<qtdRest;i++){
+      if(i!=2){
+           restr3.splice(tamanho2+i-1,0,0);
+      }
+      if(i==2){
+      restr3.splice(tamanho2+1,0,1);
+      }
+    }
   }
-}
 }
 //cria Z negativo
 
@@ -199,14 +259,29 @@ for(i=0;i<z.length;i++){
 }
 
 //cria matriz 
-console.log("--------------------Criacao de variaveis de folga----------------------------------------")
-console.log("|    Z    |  x1 |  x2 |  x3 |  x4 | xf1| xf2| xf3| sol|");   
+
 //var matriz = [[z,restr1,restr2,restr3]]
 if(qtdRest==2){
+  console.log("--------------------Criacao de variaveis de folga----------------------------------------")
+console.log("|    Z    | x1 | x2 | x3 | x4 | xf1| xf2 | sol |");  
   console.table([z,restr1,restr2]);
 }
 if(qtdRest==3){
+  if(criar2==1){
+     console.log("--------------------Criacao de variaveis de folga----------------------------------------")
+console.log("|  Z    |x1 | x2 | xf1 | xf2 | a1 | xf3 | a2| sol|");  
   console.table([z,restr1,restr2,restr3]);
+  }else{
+    console.log("--------------------Criacao de variaveis de folga----------------------------------------")
+    if(qtdVar==3){
+console.log("|    Z    |  x1 |  x2 |  x3 | xf1| xf2| xf3| sol|");  
+    }
+    if(qtdVar==4){
+      console.log("|    Z    |  x1 |  x2 |  x3 |  x4 | xf1| xf2| xf3| sol|");  
+    }
+
+  console.table([z,restr1,restr2,restr3]);
+}
 }
 
 
@@ -230,7 +305,8 @@ for(i=0;i<z.length;i++){
     console.log("coluna que entra: "+(i+1));
     if(qtdRest==3){
        var maiorValor = [restr1[i],restr2[i],restr3[i]];
-    }else{
+    }
+    if(qtdRest==2){
       var maiorValor = [restr1[i],restr2[i]];
     }
    
@@ -318,15 +394,30 @@ for(i=0;i<z.length;i++){
 }
 
 //tabela com linha que entra
-console.log("|    Z    |   x1  |   x2   |   x3  |   x4   |   xf1  |  xf2  |  xf3  |   sol  |");  
+  
 if(qtdRest==2){
+  console.log("|    Z    |   x1  |   x2   |   x3  |   x4   |  xf1  |  xf2  |  sol  |");
   console.table([z.map(item=>item.toFixed(1)),restr1.map(item=>item.toFixed(1)),restr2.map(item=>item.toFixed(1))]);
 }
 if(qtdRest==3){
+  if(criar2==1){
+    console.log("|  Z    |   x1   |  x2  |   xf1  |   xf2  |   a1   |   xf3 |  a2  |  sol  |");  
   console.table([z.map(item=>item.toFixed(1)),restr1.map(item=>item.toFixed(1)),restr2.map(item=>item.toFixed(1)),restr3.map(item=>item.toFixed(1))]);
+  }else{
+    if(qtdVar==3){
+       console.log("|    Z    |   x1  |   x2   |   x3  |   xf1  |   xf2  |  xf3  |   sol  |");
+    }
+    if(qtdVar==4){
+      console.log("|    Z    |   x1  |   x2   |   x3  |   x4   |   xf1  |  xf2  |  xf3  |   sol  |");
+    }
+  
+   
+  console.table([z.map(item=>item.toFixed(1)),restr1.map(item=>item.toFixed(1)),restr2.map(item=>item.toFixed(1)),restr3.map(item=>item.toFixed(1))]);
+  }
 }
 }
 
 if(terminou == 1){
   console.log("Soulcao Otima: "+z[z.length-1]);
 }
+
