@@ -285,7 +285,7 @@ console.log("|    Z    |  x1 |  x2 |  x3 | xf1| xf2| xf3| sol|");
 }
 
 
-
+var contLoop=0;
 var menorValor=Math.min(...z);
 while(menorValor<0){
 
@@ -299,20 +299,116 @@ if(menorValor<0){
 }
 
 //coluna que entra
+ if (contLoop==3){
+        //menorValor=1;
+        menorValor = (-0.23);
+        console.log(menorValor);
+        break;
+
+      }
 
 for(i=0;i<z.length;i++){
+  var menor = 0;
   if(z[i]==menorValor){
     console.log("coluna que entra: "+(i+1));
     if(qtdRest==3){
-       var maiorValor = [restr1[i],restr2[i],restr3[i]];
+      if(criar!=1&&criar2!=1){
+      
+      var tamanhoZ=z.length-1;
+      var v1=restr1[tamanhoZ]/restr1[i];   
+      var v2=restr2[tamanhoZ]/restr2[i];
+      var v3=restr3[tamanhoZ]/restr3[i];
+      var menorAtual = [v1,v2,v3];
+      
+      menor = Math.min(...menorAtual)
+       if(v1>0&&menor==v1){
+        //if(v1<=v2&&v1<=v3){
+            var pivo = restr1[i];
+            console.log(pivo);
+      //  }
+      }else{if(v2>0&&menor==v2){
+       // if(v2<=v1&&v2<=v3){
+            var pivo = restr2[i];
+            console.log(pivo);
+      //  }
+      }else{
+        if(v3>0&&menor==v3){
+      //  if(v3<=v1&&v3<=v2){
+            var pivo = restr3[i];
+            console.log(pivo);
+      //  }
+      }
+      }
+    } 
+    }else{
+      var tamanhoZ=z.length-1;
+      var v1=restr1[tamanhoZ]/restr1[i];   
+      var v2=restr2[tamanhoZ]/restr2[i];
+      var v3=restr3[tamanhoZ]/restr3[i];
+      var menorAtual = [v1,v2,v3];
+      menor = Math.min(...menorAtual);
+      
+      
+      if(menor<0){
+          menorAtual = [v1,v2];
+          menor = Math.min(...menorAtual);
+      }
+      if(menor <0){
+          menorAtual = [v2,v3];
+          menor = Math.min(...menorAtual);
+      }
+      if(menor <0){
+          menorAtual = [v1,v3];
+          menor = Math.min(...menorAtual);
+      }
+      contLoop++;
+     
+       if(v1>0&&menor==v1){
+        //if(v1<=v2&&v1<=v3){
+            var pivo = restr1[i];
+            console.log(pivo);
+      //  }
+      }else{if(v2>0&&menor==v2){
+       // if(v2<=v1&&v2<=v3){
+            var pivo = restr2[i];
+            console.log(pivo);
+      //  }
+      }else{
+        if(v3>0&&menor==v3){
+      //  if(v3<=v1&&v3<=v2){
+            var pivo = restr3[i];
+            console.log(pivo);
+      //  }
+      }
+      }
+    } 
     }
+  }
     if(qtdRest==2){
-      var maiorValor = [restr1[i],restr2[i]];
-    }
+      //var maiorValor = [restr1[i],restr2[i]];
+      var tamanhoZ=z.length-1;
+      var v1=restr1[tamanhoZ]/restr1[i];   
+      var v2=restr2[tamanhoZ]/restr2[i];
+      //var v3=restr3[tamanhoZ]/restr3[i];
+      var menorAtual = [v1,v2];
+      
+      menor = Math.min(...menorAtual)
+       if(v1>0&&menor==v1){
+            var pivo = restr1[i];
+            console.log(pivo);
+        }else{
+        if(v2>0&&menor==v2){
+            var pivo = restr2[i];
+            console.log(pivo);
+         }
+      }
+    } 
+
+    
    
-    var max = Math.max(...maiorValor);
-    var pivo = max;
-    console.log("Pivo: "+pivo);
+    //var max = Math.max(...maiorValor);
+    //var pivo = max;
+    //console.log("Pivo: "+pivo);
     var pivol1 = z[i]*obtemInversa;
     var pivol2 = restr1[i]*obtemInversa;
     var pivol3 = restr2[i]*obtemInversa;
@@ -396,25 +492,26 @@ for(i=0;i<z.length;i++){
 //tabela com linha que entra
   
 if(qtdRest==2){
-  console.log("|    Z    |   x1  |   x2   |   x3  |   x4   |  xf1  |  xf2  |  sol  |");
-  console.table([z.map(item=>item.toFixed(1)),restr1.map(item=>item.toFixed(1)),restr2.map(item=>item.toFixed(1))]);
+  console.log("|    Z    |   x1   |     x2   |    x3  |    x4   |   xf1  |   xf2  |   sol  |");
+  console.table([z.map(item=>item.toFixed(2)),restr1.map(item=>item.toFixed(2)),restr2.map(item=>item.toFixed(2))]);
 }
 if(qtdRest==3){
   if(criar2==1){
-    console.log("|  Z    |   x1   |  x2  |   xf1  |   xf2  |   a1   |   xf3 |  a2  |  sol  |");  
-  console.table([z.map(item=>item.toFixed(1)),restr1.map(item=>item.toFixed(1)),restr2.map(item=>item.toFixed(1)),restr3.map(item=>item.toFixed(1))]);
+    console.log("|    Z    |   x1   |    x2  |    xf1  |    xf2  |    a1   |   xf3   |   a2  |   sol  |");  
+  console.table([z.map(item=>item.toFixed(2)),restr1.map(item=>item.toFixed(2)),restr2.map(item=>item.toFixed(2)),restr3.map(item=>item.toFixed(2))]);
   }else{
     if(qtdVar==3){
-       console.log("|    Z    |   x1  |   x2   |   x3  |   xf1  |   xf2  |  xf3  |   sol  |");
+       console.log("|    Z    |   x1   |   x2   |   x3  |   xf1   |   xf2  |   xf3  |   sol  |");
     }
     if(qtdVar==4){
-      console.log("|    Z    |   x1  |   x2   |   x3  |   x4   |   xf1  |  xf2  |  xf3  |   sol  |");
+      console.log("|    Z    |    x1   |    x2    |    x3  |    x4   |    xf1  |  xf2   |   xf3  |   sol  |");
     }
   
    
-  console.table([z.map(item=>item.toFixed(1)),restr1.map(item=>item.toFixed(1)),restr2.map(item=>item.toFixed(1)),restr3.map(item=>item.toFixed(1))]);
+  console.table([z.map(item=>item.toFixed(2)),restr1.map(item=>item.toFixed(2)),restr2.map(item=>item.toFixed(2)),restr3.map(item=>item.toFixed(2))]);
   }
 }
+
 }
 
 if(terminou == 1){
