@@ -1,14 +1,16 @@
-var prompt = require('prompt-sync')();
-console.log("Digite tudo sem espaços")
+//var prompt = require('prompt-sync')();
+//console.log("Digite tudo sem espaços")
 //var funcObjetiva= prompt("Digite aqui a função objetiva: ");
 //var qtdRest = prompt("Digite a quantidade de restrições: ");
 //var r1= prompt("Digite a Restrição-1: ");
 //var r2= prompt("Digite a Restrição-2: ");
-if(qtdRest==3){
+//if(qtdRest==3){
   //var r3= prompt("Digite a Restrição-3: ");
-}
+//}
+
 
 //prob1
+var prob =1; 
 var qtdRest =3;
 var funcObjetiva = "2x1+4x2+5x3+3x4";
 var r1= "0.3x1+0.3x2+0.5x3+0.4x4<=40";
@@ -16,12 +18,14 @@ var r2 ="0.4x1+0.3x2+0.2x3+0.4x4<=40";
 var r3 ="0.3x1+0.4x2+0.3x3+0.2x4<=60"; 
 
 //prob2
+//var prob =2; 
 //var qtdRest =2;
 //var funcObjetiva = "1x1+2x2+3x3+4x4";
 //var r1= "0x1+2x2+3x3+0x4<=10";
 //var r2 ="1x1+0x2+0x3+4x4<=20.4";
 
 //prob3
+//var prob =3; 
 //var qtdRest =3;
 //var funcObjetiva= "1x1+1.2x2+1.5x3";
 //var r1="4x1+1x2+0.8x3<=10";
@@ -29,6 +33,7 @@ var r3 ="0.3x1+0.4x2+0.3x3+0.2x4<=60";
 //var r3="1.2x1+3x2+1.5x3<=11";
 
 //prob4
+//var prob =4;
 //var qtdRest = 3;
 //var funcObjetiva ="1x1+1x2";
 //var r1="5x1+2x2<=20";
@@ -516,5 +521,26 @@ if(qtdRest==3){
 
 if(terminou == 1){
   console.log("Soulcao Otima: "+z[z.length-1]);
+  
+    if(prob==1){
+       console.log("x2: "+restr1[z.length-1]);
+        console.log("xf1: "+restr2[z.length-1]);
+         console.log("xf2: "+restr3[z.length-1]);
+    }
+     if(prob==2){
+       console.log("x3: "+restr1[z.length-1]);
+        console.log("x4: "+restr2[z.length-1]);
+    }
+     if(prob==3){
+       console.log("x1: "+restr1[z.length-1]);
+        console.log("x2: "+restr2[z.length-1]);
+         console.log("x3: "+restr3[z.length-1]);
+    }
+     if(prob==4){
+console.log();
+    }
+
+    
+  
 }
 
